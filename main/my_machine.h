@@ -41,7 +41,7 @@
 //#define BOARD_JACKPOT                 // Uses TMC2209 drivers, untested!
 //#define BOARD_BTT_RODENT              // Uses TMC2160 drivers, untested!
 //#define BOARD_CNC_BOOSTERPACK         //
-//#define BOARD_GENERIC_S3              // Generic map for ESP32-S3, untested - WIP!
+#define BOARD_GENERIC_S3              // Generic map for ESP32-S3 tailored to DevKit pinout.
 //#define BOARD_GENERIC_I2S_S3          // Generic map for ESP32-S3 with I2S shift registers for I/O expansion, untested - WIP!
 //#define BOARD_PIBOT_I2S_6_AXIS        // PiBot 6-axis I2S board
 //#define BOARD_MY_MACHINE              // Add my_machine_map.h in the boards directory before enabling this!
@@ -130,8 +130,8 @@
 // of axes can be enabled here.
 //#define X_GANGED            1
 //#define X_AUTO_SQUARE       1
-//#define Y_GANGED            1
-//#define Y_AUTO_SQUARE       1
+#define Y_GANGED            1
+#define Y_AUTO_SQUARE       1
 //#define Z_GANGED            1
 //#define Z_AUTO_SQUARE       1
 // For ganged axes the limit switch input (if available) can be configured to act as a max travel limit switch.

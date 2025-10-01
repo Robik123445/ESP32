@@ -24,7 +24,7 @@
 #endif
 
 #if N_ABC_MOTORS > 0
-#error "Axis configuration is not supported!"
+#error "Generic S3 map only supports the primary XYZ axes."
 #endif
 
 #if VFD_SPINDLE
@@ -51,13 +51,21 @@
 #define STEPPERS_ENABLE_PIN     GPIO_NUM_8
 
 // Define homing/hard limit switch input pins and limit interrupt vectors.
-#define X_LIMIT_PIN             GPIO_NUM_5
-#define Y_LIMIT_PIN             GPIO_NUM_6
-#define Z_LIMIT_PIN             GPIO_NUM_7
+#define X_LIMIT_PIN             GPIO_NUM_34
+#define Y_LIMIT_PIN             GPIO_NUM_35
+#define Z_LIMIT_PIN             GPIO_NUM_36
+
+#if Y_GANGED
+// Secondary Y motor for ganged/auto-square setups.
+#define Y2_STEP_PIN             GPIO_NUM_21
+#define Y2_DIRECTION_PIN        GPIO_NUM_22
+#define Y2_ENABLE_PIN           STEPPERS_ENABLE_PIN
+#define Y2_LIMIT_PIN            GPIO_NUM_37
+#endif
 
 #define AUXOUTPUT0_PIN          GPIO_NUM_47 // Spindle PWM
-#define AUXOUTPUT1_PIN          GPIO_NUM_46 // Spindle enable
-#define AUXOUTPUT2_PIN          GPIO_NUM_45 // Spindle direction
+#define AUXOUTPUT1_PIN          GPIO_NUM_17 // Spindle enable
+#define AUXOUTPUT2_PIN          GPIO_NUM_18 // Spindle direction
 #define AUXOUTPUT3_PIN          GPIO_NUM_16 // Coolant flood
 #define AUXOUTPUT4_PIN          GPIO_NUM_15 // Coolant mist
 
@@ -82,11 +90,9 @@
 
 #define AUXINPUT0_PIN           GPIO_NUM_1
 #define AUXINPUT1_PIN           GPIO_NUM_2
-#if !SDCARD_ENABLE
 #define AUXINPUT2_PIN           GPIO_NUM_38 // Reset/EStop
-#define AUXINPUT3_PIN           GPIO_NUM_37 // Feed hold
-#endif
-#define AUXINPUT4_PIN           GPIO_NUM_36 // Cycle start
+#define AUXINPUT3_PIN           GPIO_NUM_6  // Feed hold
+#define AUXINPUT4_PIN           GPIO_NUM_7  // Cycle start
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 #if (CONTROL_ENABLE & CONTROL_HALT) && defined(AUXINPUT2_PIN)
@@ -123,8 +129,8 @@
 // Pin mapping when using SPI mode.
 // With this mapping, SD card can be used both in SPI and 1-line SD mode.
 // Note that a pull-up on CS line is required in SD mode.
-#define PIN_NUM_MISO            GPIO_NUM_37
-#define PIN_NUM_MOSI            GPIO_NUM_35
-#define PIN_NUM_CLK             GPIO_NUM_36
-#define PIN_NUM_CS              GPIO_NUM_21
+#define PIN_NUM_MISO            GPIO_NUM_41
+#define PIN_NUM_MOSI            GPIO_NUM_42
+#define PIN_NUM_CLK             GPIO_NUM_40
+#define PIN_NUM_CS              GPIO_NUM_5
 #endif
