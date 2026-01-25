@@ -28,15 +28,11 @@
 
 #include "sdkconfig.h"
 
-#ifndef OVERRIDE_MY_MACHINE
-
 #include "my_machine.h"
 
 #if WEBUI_ENABLE && !defined(WIFI_ENABLE) && !defined(ETHERNET_ENABLE)
 #define WIFI_ENABLE 1
 #endif
-
-#endif // OVERRIDE_MY_MACHINE
 
 #if WEBUI_ENABLE && !defined(WEBUI_INFLASH)
 #define WEBUI_INFLASH 1
@@ -112,6 +108,14 @@ typedef struct {
 
 #if (MODBUS_ENABLE & MODBUS_RTU_ENABLED) || TRINAMIC_UART_ENABLE==1 || MPG_ENABLE || (KEYPAD_ENABLE == 2 && MPG_ENABLE == 0)
 #define ADD_SERIAL1
+#endif
+
+#ifdef BOARD_GENERIC_S3
+#undef BOARD_GENERIC_S3
+#endif
+
+#ifndef BOARD_MY_MACHINE
+#define BOARD_MY_MACHINE
 #endif
 
 #ifdef BOARD_CNC_BOOSTERPACK
