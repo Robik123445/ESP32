@@ -134,3 +134,28 @@ struct lfs_config *esp32_littlefs_hal (void)
 
     return &t4_cfg;
 }
+
+bool esp32_littlefs_is_blank (const struct lfs_config *cfg)
+{
+    if(cfg == NULL || cfg->context == NULL)
+        return false;
+
+    esp_littlefs_t *efs = (esp_littlefs_t *)cfg->context;
+    if(efs->partition == NULL)
+        return false;
+
+    uint8_t buf[64];
+    size_t read_size = sizeof(buf);
+    if(cfg->block_size && cfg->block_size < read_size)
+        read_size = cfg->block_size;
+
+    if(esp_partition_read(efs->partition, 0, buf, read_size) != ESP_OK)
+        return false;
+
+    for(size_t i = 0; i < read_size; i++) {
+        if(buf[i] != 0xFF)
+            return false;
+    }
+
+    return true;
+}

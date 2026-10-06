@@ -1287,6 +1287,11 @@ static void wifi_settings_restore (void)
 
 static void wifi_settings_load (void)
 {
+#ifdef WIFI_FORCE_DEFAULTS
+    wifi_settings_restore();
+    return;
+#endif
+
     if(hal.nvs.memcpy_from_nvs((uint8_t *)&wifi, nvs_address, sizeof(wifi_settings_t), true) != NVS_TransferResult_OK)
         wifi_settings_restore();
 

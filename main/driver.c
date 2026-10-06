@@ -441,6 +441,13 @@ static const size_t outputPinsCount = sizeof(outputpin) / sizeof(output_signal_t
 
 static bool IOInitDone = false;
 static uint32_t t_min_period;
+#if EXPERIMENTAL_FTM
+#if USE_I2S_OUT
+#error "Experimental FTM requires the timer/RMT backend, not I2S period quantization"
+#endif
+uint32_t experimental_step_min_period (void) { return t_min_period; }
+#endif
+
 static portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 static pin_group_pins_t limit_inputs = {0};
 static on_execute_realtime_ptr on_execute_realtime;
